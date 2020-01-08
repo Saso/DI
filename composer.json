@@ -1,0 +1,20 @@
+{
+    "name": "Saso/DI",
+    "description": "Super simple Dependency Injector",
+    "authors": [
+        {
+            "name": "Saso Filipovic",
+            "email": "SasoFilipovic@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    }
+
+}

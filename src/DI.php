@@ -29,6 +29,14 @@ final class DI {
         return $di->objects[$objId];
     }
 
+    static public function status() {
+        $di = self::getInstance();
+        foreach($di->objects as $id=>$obj) {
+            $className = get_class($obj);
+            echo "\t{$id} => {$className}\n";
+        }
+    }
+
     // object interface
     private function factory( $objName, $creationParams, $context ) {
         $creatorClass = "\\DI\\Creators\\{$objName}"; // hard-coded class names

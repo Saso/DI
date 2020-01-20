@@ -6,7 +6,8 @@ namespace DI\Creators;
 abstract class Base {
 
     abstract public function production();
-
+    abstract public function afterCreate($obj);
+    
     public function __construct($params) {
         $this->params = $params;
     }

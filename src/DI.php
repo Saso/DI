@@ -20,19 +20,21 @@ final class DI {
     // $creationParams are used only with first call, upon creation and ignored after that
     static public function get( string $objName, array $creationParams=array(), string $context='production' ) {
         $di = self::getInstance();
-        //$objId = "$objName({$context})";
         $objId = md5("{$objName}-".json_encode($creationParams)."-{$context}");
         if ( !array_key_exists( $objId, $di->objects )) {
-            $di->objects[$objId] = $di->create( $objName, $creationParams, $context );
+            $factory = $di->factory( $objName, $creationParams, $context );
+            $di->objects[$objId] = $factory->$context; // actual object creation
+            $factory->afterCreate($di->objects[$objId]); // for some additional injecting
         }
         return $di->objects[$objId];
     }
 
     // object interface
-    private function create( $objName, $creationParams, $context ) {
+    private function factory( $objName, $creationParams, $context ) {
         $creatorClass = "\\DI\\Creators\\{$objName}"; // hard-coded class names
         $creator = new $creatorClass( $creationParams );
-        return $creator->$context();  // create actual obj - no params allowed here!
+        return $creator;
+        //return $creator->$context();  // create actual obj - no params allowed here!
     }
 
 }

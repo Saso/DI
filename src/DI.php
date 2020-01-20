@@ -23,7 +23,7 @@ final class DI {
         $objId = md5("{$objName}-".json_encode($creationParams)."-{$context}");
         if ( !array_key_exists( $objId, $di->objects )) {
             $factory = $di->factory( $objName, $creationParams, $context );
-            $di->objects[$objId] = $factory->$context; // actual object creation
+            $di->objects[$objId] = $factory->$context(); // actual object creation
             $factory->afterCreate($di->objects[$objId]); // for some additional injecting
         }
         return $di->objects[$objId];
